@@ -8,8 +8,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.allometry.quicknote.data.NotesDataSource
+import com.allometry.quicknote.model.Note
+import com.allometry.quicknote.screen.NoteScreen
 import com.allometry.quicknote.ui.theme.QuickNoteTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +28,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+
+
+                    val notes = remember {
+                        mutableStateListOf<Note>()
+                    }
+                        NoteScreen(notes = notes, onRemoveNote = {
+                                                                 notes.remove(it)
+                        }, onAddNote = {
+                            notes.add(it)
+                        })
                 }
             }
         }

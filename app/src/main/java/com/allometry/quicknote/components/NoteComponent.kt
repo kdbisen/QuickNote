@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.allometry.quicknote.model.Note
+import com.allometry.quicknote.utils.formatDate
 import java.time.format.DateTimeFormatter
 
 
@@ -70,7 +71,7 @@ fun NoteRow (modifier: Modifier = Modifier, note: Note, onNoteClick : (Note) -> 
      horizontalAlignment = Alignment.Start) {
          Text(text = note.title , style = MaterialTheme.typography.subtitle2 )
          Text(text = note.description, style = MaterialTheme.typography.subtitle1)
-         Text(text = note.time.format(DateTimeFormatter.ofPattern("EEE, d MMM")), style = MaterialTheme.typography.subtitle2)
+        Text(text = formatDate(note.time.time)  , style = MaterialTheme.typography.subtitle2)
      }
     }
 }

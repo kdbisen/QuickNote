@@ -1,13 +1,21 @@
 package com.allometry.quicknote.model
 
-import java.time.LocalDateTime
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.time.Instant
+
 import java.util.*
 
+@Entity(tableName =  "notes_tbl")
 data class Note(
-
+    @PrimaryKey
     val id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "note_title")
     val title: String,
+    @ColumnInfo(name = "description")
     val description: String,
-    val time: LocalDateTime = LocalDateTime.now()
 
+     @ColumnInfo(name = "note_entry_time")
+    val time:Date = Date.from(Instant.now())
 )

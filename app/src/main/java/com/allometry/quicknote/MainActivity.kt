@@ -9,18 +9,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.allometry.quicknote.data.NotesDataSource
-import com.allometry.quicknote.model.Note
 import com.allometry.quicknote.screen.NoteScreen
 import com.allometry.quicknote.screen.NoteViewModel
 import com.allometry.quicknote.ui.theme.QuickNoteTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-                    val noteViewModel: NoteViewModel by viewModels()
+                    //val noteViewModel: NoteViewModel by viewModels()
+                    val noteViewModel = viewModel<NoteViewModel>()
                     NotesApp(noteViewModel = noteViewModel)
             }
         }
@@ -41,9 +41,9 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun NotesApp(noteViewModel: NoteViewModel = viewModel())
+fun NotesApp(noteViewModel: NoteViewModel  )
 {
-    NoteScreen(notes = noteViewModel.getAllNotes(), onRemoveNote = {
+    NoteScreen(notes = noteViewModel.noteList.collectAsState().value, onRemoveNote = {
         noteViewModel.removeNote(it)
     }, onAddNote = {
         noteViewModel.addNote(it)
